@@ -1,0 +1,84 @@
+<div class="center">
+  <table class="table">
+    <thead>
+      <tr>
+        <th colspan="8">
+          <h3>Manage Mobiles</h3>
+        </th>
+        <th>
+          <button class="btn btn-primary add-mobile-btn" (click)="addmobile()">Add Mobiles</button>
+        </th>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price (Rs)</th>
+        <th>RAM</th>
+        <th>Storage</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mobile of getmobilesdata; index as i">
+        <td>{{i+1}}</td>
+        <td>{{ mobile.Name }}</td>
+        <td>{{ mobile.Price }}</td>
+        <td>{{ mobile.RAM }}</td>
+        <td>{{ mobile.Storage }}</td>
+        <td class="editdelete">
+          <button class="btn btn-primary" (click)="editmobiles(i)">Edit</button>
+          <button class="btn btn-danger" (click)="deletedata(i)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="popup-overlay" *ngIf="formcontrol">
+  <div class="popup-form">
+    <div class="form-header group">
+      <h2>{{ formheader }}</h2>
+
+      <div class="group">
+        <label for="name">Name: </label>
+        <input type="text" class="form-control" [(ngModel)]="Mobilename" name="name" #name="ngModel" minlength="3"
+          required />
+        <div *ngIf="name.invalid && name.touched" class="error-message">
+          <span *ngIf="name.errors?.['required']">Name is required.</span>
+          <span *ngIf="name.errors?.['minlength']">Name must be at least 3 characters long.</span>
+        </div>
+      </div>
+      <div>
+        <label for="price">Price(Rs): </label>
+        <input type="number" class="form-control" [(ngModel)]="Mobileprice" name="price" #price="ngModel" min="1000"
+          required />
+        <div *ngIf="price.invalid && price.touched" class="error-message">
+          <span *ngIf="price.errors?.['required']">Price is required and must be a valid number.</span>
+          <span *ngIf="price.errors?.['min']">Price must be at least 1000.</span>
+        </div>
+      </div>
+
+      <div>
+        <label for="ram">RAM(GB): </label>
+        <input type="number" class="form-control" [(ngModel)]="Mobileram" name="ram" #ram="ngModel" min="1" required />
+        <div *ngIf="ram.invalid && ram.touched" class="error-message">
+          <span *ngIf="ram.errors?.['required']">RAM is required and must be a valid number.</span>
+          <span *ngIf="ram.errors?.['min']">RAM must be at least 1 GB.</span>
+        </div>
+      </div>
+      <div>
+        <label for="storage">Storage(GB): </label>
+        <input type="number" class="form-control" [(ngModel)]="Mobilestorage" name="storage" #storage="ngModel" min="1"
+          required />
+        <div *ngIf="storage.invalid && storage.touched" class="error-message">
+          <span *ngIf="storage.errors?.['required']">Storage is required and must be a valid number.</span>
+          <span *ngIf="storage.errors?.['min']">Storage must be at least 1 GB.</span>
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-primary" (click)="saveform()" [disabled]="!formValid()">Save Changes</button>
+        <button class="btn btn-danger" (click)="cancleform()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
